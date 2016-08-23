@@ -8,11 +8,14 @@ class WordGuess
     # possible words, selected at random from csv file.
     @words = {}
 
-    CSV.read("words.csv", "r") do |line|
-      @words[line[0]] = line[1] #do want to iterate over the array, but will start with just the first thing listed.
+    CSV.open("words.csv", 'r').each do |line|
+      key = line.shift #retrieves and removes the first item in the array.
+      @words[key] = line #setting the remainder of the line array to the value matching the key created by the first element that we removed.
     end
 
-    puts @words #uh, not working, printing empty array. 
+# puts @words["e"][0] #checking that I'm getting the first word out at each key.
+# puts @words["m"][0]
+# puts @words["h"][0]
 
     #   "e" => %w(dog cat bug hat cap lit kin fan fin fun tan ten tin ton),
     #   "m" => %w(plain claim brine crime alive bride skine drive slime stein jumpy),
@@ -140,4 +143,4 @@ class WordGuess
   end
 end
 
-WordGuess.new(true)
+WordGuess.new
