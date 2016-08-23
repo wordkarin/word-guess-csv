@@ -1,17 +1,26 @@
+require 'csv'
+
 class WordGuess
   def initialize(debug = false)
     # are we in debug mode?
     @debug = debug
 
-    # possible words, selected at random
-    @words = {
-      "e" => %w(dog cat bug hat cap lit kin fan fin fun tan ten tin ton),
-      "m" => %w(plain claim brine crime alive bride skine drive slime stein jumpy),
-      "h" => %w(
-          machiavellian prestidigitation plenipotentiary quattuordecillion
-          magnanimous unencumbered bioluminescent circumlocution
-        )
-    }
+    # possible words, selected at random from csv file.
+    @words = {}
+
+    CSV.read("words.csv", "r") do |line|
+      @words[line[0]] = line[1] #do want to iterate over the array, but will start with just the first thing listed.
+    end
+
+    puts @words #uh, not working, printing empty array. 
+
+    #   "e" => %w(dog cat bug hat cap lit kin fan fin fun tan ten tin ton),
+    #   "m" => %w(plain claim brine crime alive bride skine drive slime stein jumpy),
+    #   "h" => %w(
+    #       machiavellian prestidigitation plenipotentiary quattuordecillion
+    #       magnanimous unencumbered bioluminescent circumlocution
+    #     )
+    # }
 
     # players attempts allowed by difficulty
     @tries = {
@@ -131,4 +140,4 @@ class WordGuess
   end
 end
 
-WordGuess.new
+WordGuess.new(true)
